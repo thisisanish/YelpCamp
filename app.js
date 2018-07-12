@@ -9,7 +9,8 @@ app.set("view engine", "ejs"); // no need to write ejs
 //Schema Setup
 var campgroundSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    description: String
 })
 
 var Campground = mongoose.model("Campground", campgroundSchema);
@@ -17,7 +18,8 @@ var Campground = mongoose.model("Campground", campgroundSchema);
 
 // Campground.create({
 //     name: "Castel Black",
-//     image: "https://pixabay.com/get/eb35b70b2df6033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"
+//     image: "https://pixabay.com/get/eb35b70b2df6033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg",
+//     description: "This is awesomeee!!!"
 // }, function(err, campground){
 //     if(err){
 //         console.log("error dude");
@@ -26,49 +28,47 @@ var Campground = mongoose.model("Campground", campgroundSchema);
 //         console.log(campground);
         
 //     }
-// })
+// });
 
 
-var campgrounds = [
-    {name: "Castel Black", image: "https://pixabay.com/get/eb35b70b2df6033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
-    {name: "Kings Landing", image: "https://pixabay.com/get/e83db50929f0033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
-    {name: "Winterfell", image: "https://pixabay.com/get/e834b5062cf4033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
-    {name: "Castel Black", image: "https://pixabay.com/get/eb35b70b2df6033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
-    {name: "Kings Landing", image: "https://pixabay.com/get/e83db50929f0033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
-    {name: "Winterfell", image: "https://pixabay.com/get/e834b5062cf4033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
-    {name: "Castel Black", image: "https://pixabay.com/get/eb35b70b2df6033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
-    {name: "Kings Landing", image: "https://pixabay.com/get/e83db50929f0033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
-    {name: "Winterfell", image: "https://pixabay.com/get/e834b5062cf4033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"}
-]
+// var campgrounds = [
+//     {name: "Castel Black", image: "https://pixabay.com/get/eb35b70b2df6033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
+//     {name: "Kings Landing", image: "https://pixabay.com/get/e83db50929f0033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
+//     {name: "Winterfell", image: "https://pixabay.com/get/e834b5062cf4033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
+//     {name: "Castel Black", image: "https://pixabay.com/get/eb35b70b2df6033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
+//     {name: "Kings Landing", image: "https://pixabay.com/get/e83db50929f0033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
+//     {name: "Winterfell", image: "https://pixabay.com/get/e834b5062cf4033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
+//     {name: "Castel Black", image: "https://pixabay.com/get/eb35b70b2df6033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
+//     {name: "Kings Landing", image: "https://pixabay.com/get/e83db50929f0033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
+//     {name: "Winterfell", image: "https://pixabay.com/get/e834b5062cf4033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"}
+// ]
 
 app.get("/", function(req, res){
     res.render("landing")
     
 });
-
+// INDEX
 app.get("/campgrounds", function(req, res){
     Campground.find({}, function(err, allcampgrounds){
         if(err){
             console.log(err);
         }
         else{
-            res.render("campgrounds", {campgrounds: allcampgrounds}); // passing the data to ejs
+            res.render("index", {campgrounds: allcampgrounds}); // passing the data to ejs
         }
     })
 
     
 });
-
+// CREATE
 app.post("/campgrounds",function(req, res){
     // we need to get data from form and add to campground and also redirect to campground page
     var name = req.body.name;
     var image = req.body.image;
-    var newCampground = {name: name, image: image}
+    var desc = req.body.description;
+    var newCampground = {name: name, image: image, description: desc}
     // Creating a campground and save it to a database
-    Campground.create({
-        name: name,
-        image: image
-    }, function(err, newground){
+    Campground.create(newCampground, function(err, newground){
         if(err){
             console.log("An Error!");
             console.log(err);
@@ -83,14 +83,25 @@ app.post("/campgrounds",function(req, res){
     res.redirect("/campgrounds");
 
 });
-
+// NEW
 app.get("/campgrounds/new", function(req, res){
     res.render("new")
     
 })
+// Show
+app.get("/campgrounds/:id", function(req, res){
+    Campground.findById(req.params.id, function(err, foundCampground){
+        if(err){
+            console.log(err);
+            
+        }else{
+            res.render("show", {campground: foundCampground})
+        }
+    })
+    
+})
 
-
-
+// listning
 app.listen(3000, function(){
     console.log("Server is running at port 3000");   
 })
