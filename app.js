@@ -3,7 +3,8 @@ var express = require("express");
     bodyParser = require("body-parser"),
     Campground = require("./models/campground.js")
     mongoose = require("mongoose"),
-    seedDB = require("./seeds.js");
+    seedDB = require("./seeds.js"),
+    Comment = require("./models/comment.js");
 
 
 seedDB();
@@ -78,11 +79,14 @@ app.get("/campgrounds/new", function(req, res){
 })
 // Show
 app.get("/campgrounds/:id", function(req, res){
-    Campground.findById(req.params.id, function(err, foundCampground){
+    Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
         if(err){
             console.log(err);
+            console.log(foundCampground);
+            
             
         }else{
+            console.log(foundCampground);
             res.render("show", {campground: foundCampground})
         }
     })
