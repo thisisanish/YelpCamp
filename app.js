@@ -2,10 +2,11 @@ var express = require("express");
     app = express(),
     bodyParser = require("body-parser"),
     Campground = require("./models/campground.js")
-    mongoose = require("mongoose");
+    mongoose = require("mongoose"),
+    seedDB = require("./seeds.js");
 
 
-    
+seedDB();
 mongoose.connect("mongodb://localhost/yelp_camp");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs"); // no need to write ejs
@@ -28,17 +29,7 @@ app.set("view engine", "ejs"); // no need to write ejs
 // });
 
 
-// var campgrounds = [
-//     {name: "Castel Black", image: "https://pixabay.com/get/eb35b70b2df6033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
-//     {name: "Kings Landing", image: "https://pixabay.com/get/e83db50929f0033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
-//     {name: "Winterfell", image: "https://pixabay.com/get/e834b5062cf4033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
-//     {name: "Castel Black", image: "https://pixabay.com/get/eb35b70b2df6033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
-//     {name: "Kings Landing", image: "https://pixabay.com/get/e83db50929f0033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
-//     {name: "Winterfell", image: "https://pixabay.com/get/e834b5062cf4033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
-//     {name: "Castel Black", image: "https://pixabay.com/get/eb35b70b2df6033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
-//     {name: "Kings Landing", image: "https://pixabay.com/get/e83db50929f0033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"},
-//     {name: "Winterfell", image: "https://pixabay.com/get/e834b5062cf4033ed1584d05fb1d4e97e07ee3d21cac104496f1c17dafeeb3bb_340.jpg"}
-// ]
+
 
 app.get("/", function(req, res){
     res.render("landing")
