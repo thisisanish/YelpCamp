@@ -43,7 +43,7 @@ app.get("/campgrounds", function(req, res){
             console.log(err);
         }
         else{
-            res.render("index", {campgrounds: allcampgrounds}); // passing the data to ejs
+            res.render("campgrounds/index", {campgrounds: allcampgrounds}); // passing the data to ejs
         }
     })
 
@@ -74,29 +74,69 @@ app.post("/campgrounds",function(req, res){
 });
 // NEW
 app.get("/campgrounds/new", function(req, res){
-    res.render("new")
+    res.render("campgrounds/new")
     
 })
 // Show
 app.get("/campgrounds/:id", function(req, res){
     Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
         if(err){
-            console.log(err);
-            console.log(foundCampground);
-            
-            
+            console.log(err);            
         }else{
-            console.log(foundCampground);
-            res.render("show", {campground: foundCampground})
+            res.render("campgrounds/show", {campground: foundCampground})
         }
     })
     
 })
 
+// ===========================
+app.get("/campgrounds/:id/comments/new", function (req, res) {
+    Campground.findById(req.params.id, function(err, campground){
+        if(err){
+            console.log(err);
+            
+        }else{
+            res.render("comments/new", {campground: campground})
+        }
+    })   
+})
+
+app.post("/campgrounds/:id/comments", function(req, res){
+    console.log("this is post route");
+    
+    Campground.findById(req.params.id, function(err, campground){
+        if(err){
+            console.log("error");
+            
+            res.redirect("/campground")
+        }else{
+            Comment.create(req.body.comment, function(err, comment){
+                if(err){
+                    console.log("error");
+                    
+                }else{
+                    console.log("almost there");
+                    
+                    campground.comments.push(comment)
+                    campground.save();
+                    res.redirect("/campgrounds/" + campground._id)
+                }
+            })
+            
+        }
+    })
+})
+
+
+// ===========================
+
+
+
 // listning
 app.listen(3000, function(){
     console.log("Server is running at port 3000");   
 })
+
 
 
 /*
