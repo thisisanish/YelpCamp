@@ -16,7 +16,7 @@ var commentRoutes = require("./routes/comments"),
 
 
 
-seedDB(); // initialize seedDB to remove all the data and fill with predefined data
+//seedDB(); // initialize seedDB to remove all the data and fill with predefined data
 mongoose.connect("mongodb://localhost/yelp_camp"); // mongoose connected to a url
 app.use(bodyParser.urlencoded({extended: true})); // just write this to use body parser
 app.set("view engine", "ejs"); // no need to write ejs

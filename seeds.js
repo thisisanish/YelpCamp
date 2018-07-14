@@ -16,39 +16,39 @@ var data = [
 
 function seedDB(){
     Campground.remove({}, function(err){
-        if(err){
-            console.log("err");
+        // if(err){
+        //     console.log("err");
             
-        }else{
-            console.log("All Campground Removed");
-            // adding
-            data.forEach(function(seed){
-                Campground.create(seed, function(err, campground){
-                    if(err){
-                        console.log(err);
+        // }else{
+        //     console.log("All Campground Removed");
+        //     // adding
+        //     data.forEach(function(seed){
+        //         Campground.create(seed, function(err, campground){
+        //             if(err){
+        //                 console.log(err);
                         
-                    }else{
-                        console.log("Added new Seed Campground");
-                        Comment.create({
-                            text: "Goooood",
-                            author: "Jon doe"
-                        }, function(err, comment){
-                            if (err) {
-                                console.log(err);
-                            } else {
+        //             }else{
+        //                 console.log("Added new Seed Campground");
+        //                 Comment.create({
+        //                     text: "Goooood",
+        //                     author: "Jon doe"
+        //                 }, function(err, comment){
+        //                     if (err) {
+        //                         console.log(err);
+        //                     } else {
                                 
-                                campground.comments.push(comment);
-                                campground.save()
-                                console.log("Created neew comment");
+        //                         campground.comments.push(comment);
+        //                         campground.save()
+        //                         console.log("Created neew comment");
                                 
-                            }
-                        })
+        //                     }
+        //                 })
                         
-                    };
-                })
-            })
+        //             };
+        //         })
+        //     })
             
-        }// else ended
+        // }// else ended
 
 
     });
