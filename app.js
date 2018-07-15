@@ -19,7 +19,13 @@ var commentRoutes = require("./routes/comments"),
 
 
 //seedDB(); // initialize seedDB to remove all the data and fill with predefined data
-mongoose.connect("mongodb://localhost/yelp_camp"); // mongoose connected to a url
+// mongoose.connect("mongodb://localhost/yelp_camp"); // mongoose connected to a url
+
+mongoose.connect("mongodb://anish:password1@ds239071.mlab.com:39071/yelpcamp_proto");
+
+
+
+
 app.use(bodyParser.urlencoded({extended: true})); // just write this to use body parser
 app.set("view engine", "ejs"); // no need to write ejs
 app.use(express.static(__dirname + "/public")) // to be able to use files like css . public is the directory where we are storing those files
