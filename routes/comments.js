@@ -24,7 +24,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
     Campground.findById(req.params.id, function(err, campground){
         if(err){
             console.log("error");
-            
+            req.flash("error", "Something went wrong")
             res.redirect("/campground")
         }else{
             Comment.create(req.body.comment, function(err, comment){ // create a comment
@@ -42,6 +42,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
                     comment.save();
                     campground.comments.push(comment) // push the new comment in campground.comments.
                     campground.save(); // and save
+                    req.flash("success", "Comment added")
                     res.redirect("/campgrounds/" + campground._id) // and redirect back to show page
                 }
             })

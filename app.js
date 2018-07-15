@@ -8,7 +8,8 @@ var express = require("express"); // express framework
     passport = require("passport"), // for authentication
     LocalStratergy = require("passport-local"), // for local authentication, other stratergy includes twitter, facebook, github
     User = require("./models/user.js"),// module located in models
-    methodOverride = require("method-override");
+    methodOverride = require("method-override"),
+    flash = require("connect-flash");
     
     // requiring routes
 var commentRoutes = require("./routes/comments"),
@@ -34,10 +35,13 @@ app.use(passport.session()); // passport session
 passport.use(new LocalStratergy(User.authenticate())) // remember when we use "local"
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+app.use(flash());
 
 // ----------
 app.use(function(req, res, next){
     res.locals.currentUser = req.user; // whatever is with res.locals will be available to the templates
+    res.locals.error = req.flash("error")
+    res.locals.success = req.flash("success")
     next(); // important
 }) // our own middle ware
 
@@ -47,7 +51,7 @@ app.use("/campgrounds/:id/comments", commentRoutes)
 
 
 // listning
-app.listen(3000, function(){
+app.listen(process.env.PORT || 3000, process.env.IP, function(){
     console.log("Server is running at port 3000");   
 })
 

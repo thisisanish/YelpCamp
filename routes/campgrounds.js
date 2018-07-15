@@ -24,14 +24,15 @@ router.get("/", function(req, res){
 router.post("/", middleware.isLoggedIn, function(req, res){
     // we need to get data from form and add to campground and also redirect to campground page
     var name = req.body.name;
+    var price = req.body.price;
     var image = req.body.image;
     var desc = req.body.description;
     var author = {
         id: req.user._id,
         username:req.user.username
     }
-    var newCampground = {name: name, image: image, description: desc, author: author}
-    console.log(req.user);
+    var newCampground = {name: name, price: price, image: image, description: desc, author: author}
+    console.log(newCampground);
     
     // Creating a campground and save it to a database
     Campground.create(newCampground, function(err, newground){
@@ -94,6 +95,7 @@ router.delete("/:id", middleware.checkCampgroundOwnership, function(req, res){
             
             res.redirect("/campgrounds")
         }else{
+            req.flash("success", "Comment deleted")
             res.redirect("/campgrounds")
         }
     })

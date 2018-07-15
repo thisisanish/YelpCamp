@@ -26,11 +26,14 @@ router.post("/register", function(req, res){
     // User.register registers a new user, and saves its details except password in database. req.body.password goes as other parameter where it probably gets hashed and salted so as to maintain security
     User.register(newUser, req.body.password, function(err, user){
         if(err){
+            req.flash("error", err.message)
             console.log(err);
+            
             return res.render("register")
         }else{
             // passport.authenticate !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             passport.authenticate("local")(req, res, function(){
+                req.flash("success", "Welcome to Yelpcamp" + user.username)
                 res.redirect("/campgrounds");
             })
         }
@@ -52,6 +55,7 @@ router.post("/login", passport.authenticate("local",
 // logout route
 router.get("/logout", function(req, res){
     req.logout();
+    req.flash("error", "Logged you out!")
     res.redirect("/campgrounds")
 })
 //remember the syntax
