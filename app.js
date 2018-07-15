@@ -7,8 +7,9 @@ var express = require("express"); // express framework
     Comment = require("./models/comment.js"),// module located in models
     passport = require("passport"), // for authentication
     LocalStratergy = require("passport-local"), // for local authentication, other stratergy includes twitter, facebook, github
-    User = require("./models/user.js");// module located in models
-
+    User = require("./models/user.js"),// module located in models
+    methodOverride = require("method-override");
+    
     // requiring routes
 var commentRoutes = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
@@ -21,7 +22,7 @@ mongoose.connect("mongodb://localhost/yelp_camp"); // mongoose connected to a ur
 app.use(bodyParser.urlencoded({extended: true})); // just write this to use body parser
 app.set("view engine", "ejs"); // no need to write ejs
 app.use(express.static(__dirname + "/public")) // to be able to use files like css . public is the directory where we are storing those files
-
+app.use(methodOverride("_method"))
 // PASSPORT CONFIG
 app.use(require("express-session")({
     secret: "Pugs are awesome!",
