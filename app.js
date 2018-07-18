@@ -21,8 +21,8 @@ var commentRoutes = require("./routes/comments"),
 //seedDB(); // initialize seedDB to remove all the data and fill with predefined data
 
 
-// mongoose.connect("mongodb://localhost/yelp_camp_server"); // mongoose connected to a url
-mongoose.connect("mongodb://anish:password1@ds239071.mlab.com:39071/yelpcamp_proto");
+mongoose.connect("mongodb://localhost/yelp_camp_server"); // mongoose connected to a url
+// mongoose.connect("mongodb://anish:password1@ds239071.mlab.com:39071/yelpcamp_proto");
 // console.log(process.env.databaseURL);
 
 
