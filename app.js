@@ -58,12 +58,17 @@ app.use("/campgrounds", campgroundRoutes)
 app.use("/campgrounds/:id/comments", commentRoutes)
 
 
-// listning
-app.listen(process.env.PORT || 3000, process.env.IP, function(){
-    console.log("Server is running at port 3000");   
-})
+// // listning
+// app.listen(process.env.PORT || 3000, process.env.IP, function(){
+//     console.log("Server is running at port 3000 or on process.env.PORT");   
+// })
 
+app.set( 'port', ( process.env.PORT || 5000 ));
 
+// Start node server
+app.listen( app.get( 'port' ), function() {
+  console.log( 'Node server is running on port ' + app.get( 'port' ));
+  });
 
 /*
 optional for c9
