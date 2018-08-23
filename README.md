@@ -1,3 +1,3 @@
 # YelpCamp
-[TThe Site is live on Heroku !!](https://www.yelpcamp-prototype.herokuapp.com "Yelpcamp")
+[The Site is live on Heroku !!](https://yelpcamp-prototype.herokuapp.com/ "Yelpcamp")/n
 work in progress....
