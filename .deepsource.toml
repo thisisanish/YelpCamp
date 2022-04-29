@@ -3,3 +3,15 @@ version = 1
 [[analyzers]]
 name = "javascript"
 enabled = true
+
+ [analyzers.meta]
+  ecma_version = "2016"
+  module_system = "commonjs"
+  environment = [
+    "nodejs",
+    "express",
+    "jest",
+  ]
+
+  style_guide = "airbnb"
+  dialect = "typescript"
