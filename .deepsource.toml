@@ -9,7 +9,6 @@ enabled = true
   module_system = "commonjs"
   environment = [
     "nodejs",
-    "express",
     "jest",
   ]
 
